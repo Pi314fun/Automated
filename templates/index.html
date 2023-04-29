@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSONL Processing Application</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.0/socket.io.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>JSONL Processing Application</h1>
+        <form id="upload-form" method="POST" enctype="multipart/form-data" action="{{ url_for('index') }}">
+            <input type="file" name="JSONL" required>
+            <select name="use_case" required>
+                <option value="" selected disabled>Select a use case</option>
+                <option value="text_classification">Text Classification</option>
+                <option value="sentiment_analysis">Sentiment Analysis</option>
+                <option value="entity_extraction">Entity Extraction</option>
+                <option value="chatbot">Chatbot</option>
+                <option value="product_description">Product Description</option>
+            </select>
+            <button type="submit">Upload and Process</button>
+        </form>
+        <div class="progress-container">
+            <div class="progress">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+            <p id="progress-message"></p>
+        </div>
+        <div class="logs">
+            <pre id="logs-output"></pre>
+        </div>
+        {% if error_message %}
+            <p class="error">{{ error_message }}</p>
+        {% endif %}
+    </div>
+    <div id="spinner-container" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+    <div id="visitor-count" style="text-align: center;">
+        <h2>Visitor count: <span id="visitor-number"></span></h2>
+    </div>
+</body>
+</html>
